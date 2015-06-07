@@ -1,0 +1,27 @@
+- name: Get installed ES plugins list
+  shell: /usr/share/elasticsearch/bin/plugin -l
+  tags: esplugin
+  register: es_plugin
+  changed_when: false
+
+
+- include: plugins/cloud-aws.yml
+  when: elasticsearch.plugins is defined and elasticsearch.plugins is sequence and elasticsearch.plugins|join|search("cloud-aws")
+
+- include: plugins/marvel.yml
+  when: elasticsearch.plugins is defined and elasticsearch.plugins is sequence and elasticsearch.plugins|join|search("marvel")
+
+- include: plugins/head.yml
+  when: elasticsearch.plugins is defined and elasticsearch.plugins is sequence and elasticsearch.plugins|join|search("head")
+
+- include: plugins/hq.yml
+  when: elasticsearch.plugins is defined and elasticsearch.plugins is sequence and elasticsearch.plugins|join|search("hq")
+
+- include: plugins/bigdesk.yml
+  when: elasticsearch.plugins is defined and elasticsearch.plugins is sequence and elasticsearch.plugins|join|search("bigdesk")
+
+- include: plugins/paramedic.yml
+  when: elasticsearch.plugins is defined and elasticsearch.plugins is sequence and elasticsearch.plugins|join|search("paramedic")
+
+- include: plugins/kopf.yml
+  when: elasticsearch.plugins is defined and elasticsearch.plugins is sequence and elasticsearch.plugins|join|search("kopf")

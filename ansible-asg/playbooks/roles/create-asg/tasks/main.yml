@@ -1,0 +1,49 @@
+- name: Create EC2 Elastic Load Balancer
+  local_action:
+    module: ec2_elb_lb
+    name: "{{client}}-{{env}}-elasticsearch-elb"
+    state: present
+    cross_az_load_balancing: "yes"
+    zones:
+      - "{{region}}a"
+      - "{{region}}b"
+      - "{{region}}c"
+    listeners:
+      - protocol: http
+        load_balancer_port: 9200
+        instance_port: 9200
+    health_check:
+        ping_protocol: http
+        ping_port: 9200
+        ping_path: "/"
+        response_timeout: 5
+        interval: 30
+        unhealthy_threshold: 2
+        healthy_threshold: 10
+
+
+- name: Create EC2 Launch configuration
+  local_action:
+    module: ec2_lc
+    name: "{{client}}.{{env}}.elasticsearch.launchconfiguration"
+    image_id: "{{ami_image_id}}"
+    key_name: "{{keypair}}"
+    security_groups: [ "{{client}}_{{env}}_elasticsearch_node_sg" ]
+    instance_type: t1.micro
+
+- name: Create EC2 Auto Scaling Group
+  local_action:
+    module: ec2_asg
+    name: "{{client}}.{{env}}.elasticsearch.autoscalinggroup"
+    launch_config_name: "{{client}}.{{env}}.elasticsearch.launchconfiguration"
+    load_balancers: [ "{{client}}-{{env}}-elasticsearch-elb" ]
+    health_check_period: 180
+    health_check_type: ELB
+    replace_all_instances: yes
+    min_size: 3
+    max_size: 10
+    desired_capacity: 3
+    region: "{{region}}"
+    wait_for_instances: no
+    tags:
+    - Name: "{{client}}.{{env}}.elasticsearch_node"

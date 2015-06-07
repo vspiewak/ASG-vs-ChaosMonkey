@@ -1,0 +1,8 @@
+# playbook for ec2 autoscaling group
+
+- hosts: "{{lookup('env','CLIENT')}}_{{lookup('env','ENV')}}_elasticsearch_node"
+  connection: local
+  gather_facts: true
+
+  roles:
+    - create-asg

@@ -1,0 +1,38 @@
+# playbook for destroying infrastructure
+
+- hosts: "{{lookup('env','CLIENT')}}_{{lookup('env','ENV')}}_elasticsearch_autoscalinggroup"
+  gather_facts: true
+  connection: local
+
+  tasks:
+
+    - name: Delete EC2 Auto Scaling Group
+      local_action:
+        module: ec2_asg
+        name: "{{client}}.{{env}}.elasticsearch.autoscalinggroup"
+        state: absent
+
+    - name: Delete EC2 Launch configuration
+      local_action:
+        module: ec2_lc
+        name: "{{client}}.{{env}}.elasticsearch.launchconfiguration"
+        state: absent
+
+    - name: Delete EC2 ELB
+      local_action:
+         module: ec2_elb_lb
+         name: "{{client}}-{{env}}-elasticsearch-elb"
+         state: absent
+
+    - name: Terminate all instances
+      local_action:
+        module: ec2
+        state: absent
+        instance_ids: "{{ ec2_id }}"
+
+    - name: Delete AMI
+      local_action:
+        module: ec2_ami
+        image_id: "{{ ami_image_id }}"
+        delete_snapshot: True
+        state: absent

@@ -1,0 +1,6 @@
+---
+
+- name: Install ES cloud-aws plugin
+  shell: /usr/share/elasticsearch/bin/plugin install elasticsearch/elasticsearch-cloud-aws/2.5.1
+  tags: es_plugin
+  when: '"- cloud-aws" not in es_plugin.stdout'

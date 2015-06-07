@@ -1,0 +1,6 @@
+---
+
+- name: Install ES bigdesk plugin
+  shell: /usr/share/elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
+  tags: es_plugin
+  when: '"- bigdesk" not in es_plugin.stdout'

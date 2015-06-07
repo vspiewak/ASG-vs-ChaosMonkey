@@ -1,0 +1,6 @@
+---
+
+- name: Install ES head plugin
+  shell: /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
+  tags: es_plugin
+  when: '"- head" not in es_plugin.stdout'

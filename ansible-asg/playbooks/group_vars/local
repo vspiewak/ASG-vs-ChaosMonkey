@@ -1,0 +1,15 @@
+amazon:
+  client: "{{client}}"
+  env: "{{env}}"
+  instances:
+    elasticsearch_node:
+      ami: ami-e7e66a90
+      type: t1.micro
+      count: 1
+      role: elasticsearch
+      security_group:
+        rules:
+          - { proto: tcp, from_port: 22, to_port: 22, cidr_ip: 0.0.0.0/0 }
+          - { proto: tcp, from_port: 443, to_port: 443, cidr_ip: 0.0.0.0/0 }
+          - { proto: tcp, from_port: 9200, to_port: 9200, cidr_ip: 0.0.0.0/0 }
+          - { proto: tcp, from_port: 9300, to_port: 9300, cidr_ip: 0.0.0.0/0 }

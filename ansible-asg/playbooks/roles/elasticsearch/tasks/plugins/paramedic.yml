@@ -1,0 +1,6 @@
+---
+
+- name: Install ES paramedic plugin
+  shell: /usr/share/elasticsearch/bin/plugin -install karmi/elasticsearch-paramedic 
+  tags: es_plugin
+  when: '"- paramedic" not in es_plugin.stdout'

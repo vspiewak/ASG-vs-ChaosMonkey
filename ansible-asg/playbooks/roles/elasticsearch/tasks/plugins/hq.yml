@@ -1,0 +1,6 @@
+---
+
+- name: Install ES hq plugin
+  shell: /usr/share/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ
+  tags: es_plugin
+  when: '"- HQ" not in es_plugin.stdout'

@@ -1,0 +1,6 @@
+---
+
+- name: Install ES marvel plugin
+  shell: /usr/share/elasticsearch/bin/plugin -i elasticsearch/marvel/latest
+  tags: es_plugin
+  when: '"- marvel" not in es_plugin.stdout'

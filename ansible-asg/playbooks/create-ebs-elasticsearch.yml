@@ -1,0 +1,12 @@
+# playbook for elasticsearch
+
+- hosts: "{{lookup('env','CLIENT')}}_{{lookup('env','ENV')}}_elasticsearch_node"
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name : Create ebs volume
+      ec2_vol:
+          instance: "{{ ec2_id }}"
+          device_name: /dev/xvdb
+          volume_size: 49

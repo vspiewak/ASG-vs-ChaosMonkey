@@ -1,0 +1,24 @@
+# Common role for all hosts
+
+- name: Configuring Timezone
+  shell: echo {{ timezone }} > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
+
+- name: Update APT
+  apt: update_cache=yes
+
+- name: Install curl
+  apt:
+    pkg=curl
+    state=present
+
+- name: Install NTP
+  apt:
+    pkg=ntp
+    state=present
+  notify: Restart NTP
+
+- name: Enable NTP service
+  service:
+    name=ntp
+    enabled=yes
+    state=started

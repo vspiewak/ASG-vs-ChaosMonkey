@@ -1,0 +1,13 @@
+elasticsearch:
+  version: 1.5
+  clustername: elasticsearch-cluster
+  nodename: node-master-{{ hostvars[inventory_hostname]['ec2_id'] }}
+  quorom: 1
+  number_of_replicas: 2
+  plugins:
+    - cloud-aws
+    - bigdesk
+    - head
+    - hq
+    - kopf
+    - paramedic

@@ -1,0 +1,6 @@
+---
+
+- name: Install ES paramedic plugin
+  shell: /usr/share/elasticsearch/bin/plugin -install lmenezes/elasticsearch-kopf
+  tags: es_plugin
+  when: '"- kopf" not in es_plugin.stdout'

@@ -1,0 +1,13 @@
+# Create EC2 ami image
+
+- name: Create EC2 AMI image
+  local_action:
+    module: ec2_ami
+    instance_id: "{{ hostvars[inventory_hostname].ec2_id }}"
+    name: "{{client}}_{{env}}_elasticsearch_ami"
+    wait: yes
+    state: present
+  register: ami
+
+- name: Display ami image_id
+  debug: var=ami.image_id
