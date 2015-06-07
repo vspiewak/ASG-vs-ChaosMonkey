@@ -8,10 +8,10 @@ It will setup an Elasticsearch cluster on EC2 using Ansible and "bullet proof" i
 Setup EC2 AWS Infra
 -------------------
 
-Follow the instructions in ansible-asg/README.md
+Follow the instructions in [ansible-asg/README.md](./ansible-asg/README.md)
 
 
 Setup Chaos Monkey
 ------------------
 
-Follow the instructions in CHAOS.md
+Follow the instructions in [CHAOS.md](./CHAOS.md)
