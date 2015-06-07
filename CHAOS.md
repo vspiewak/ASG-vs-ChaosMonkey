@@ -50,51 +50,6 @@ You should see a similar output:
     TERMINATIONPOLICIES	Default
 
 
-Setup SimpleDB table
---------------------
-
-    sdb() {
-            case $(uname -s) in
-                Darwin) timestamp=$(date -uj  -f %s $(($(date +%s) - (5 * 60)))  +"%FT%TZ" | sed s/:/%3A/g);;
-                Linux)  timestamp=$(date -u +"%FT%TZ" --date='5 min ago' | sed s/:/%3A/g);;
-            esac
-            params="AWSAccessKeyId=$AWS_ACCESS_KEY"
-            params="$params&Action=$1"
-            [ -z "$2" ] || params="$params&DomainName=$2"
-            params="$params&SignatureMethod=HmacSHA256"
-            params="$params&SignatureVersion=2"
-            params="$params&Timestamp=$timestamp"
-            params="$params&Version=2009-04-15"
-            payload="GET\nsdb.eu-west-1.amazonaws.com\n/\n$params"
-            hash=$(echo -ne $payload | openssl dgst -sha256 -hmac "$AWS_SECRET_KEY" -binary | base64)
-            curl -H application/x-www-form-urlencoded "https://sdb.eu-west-1.amazonaws.com/?$params&Signature=$hash"
-        }
-
-
-Create SIMIAN_ARMY SimpleDB table
----------------------------------
-
-    sdb CreateDomain SIMIAN_ARMY
-
-    <?xml version="1.0"?>
-    <CreateDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>3f5b73d7-a612-5673-62b7-f4d0477bc10e</RequestId><BoxUsage>0.0055590278</BoxUsage></ResponseMetadata></CreateDomainResponse>
-
-
-
-    sdb ListDomains
-    <?xml version="1.0"?>
-    <ListDomainsResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ListDomainsResult><DomainName>ElasticMapReduce-2013-02</DomainName><DomainName>SIMIAN_ARMY</DomainName></ListDomainsResult><ResponseMetadata><RequestId>5e8fc8c7-bad1-07f9-8c47-4651b5ee164d</RequestId><BoxUsage>0.0000071759</BoxUsage></ResponseMetadata></ListDomainsResponse>
-
-
-Delete SIMIAN_ARMY SimpleDB table
----------------------------------
-
-    sdb DeleteDomain SIMIAN_ARMY
-
-    <?xml version="1.0"?>
-    <DeleteDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>75a41c3d-0468-fe97-1b7a-d405fee72ba0</RequestId><BoxUsage>0.0055590278</BoxUsage></ResponseMetadata></DeleteDomainResponse>
-
-
 Setup a Simian Army IAM role (optional)
 ---------------------------------------
 
@@ -144,6 +99,51 @@ Setup a Simian Army IAM role (optional)
         }
       ]
     }
+
+    
+Setup SimpleDB table
+--------------------
+
+    sdb() {
+            case $(uname -s) in
+                Darwin) timestamp=$(date -uj  -f %s $(($(date +%s) - (5 * 60)))  +"%FT%TZ" | sed s/:/%3A/g);;
+                Linux)  timestamp=$(date -u +"%FT%TZ" --date='5 min ago' | sed s/:/%3A/g);;
+            esac
+            params="AWSAccessKeyId=$AWS_ACCESS_KEY"
+            params="$params&Action=$1"
+            [ -z "$2" ] || params="$params&DomainName=$2"
+            params="$params&SignatureMethod=HmacSHA256"
+            params="$params&SignatureVersion=2"
+            params="$params&Timestamp=$timestamp"
+            params="$params&Version=2009-04-15"
+            payload="GET\nsdb.eu-west-1.amazonaws.com\n/\n$params"
+            hash=$(echo -ne $payload | openssl dgst -sha256 -hmac "$AWS_SECRET_KEY" -binary | base64)
+            curl -H application/x-www-form-urlencoded "https://sdb.eu-west-1.amazonaws.com/?$params&Signature=$hash"
+        }
+
+
+Create SIMIAN_ARMY SimpleDB table
+---------------------------------
+
+    sdb CreateDomain SIMIAN_ARMY
+
+    <?xml version="1.0"?>
+    <CreateDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>3f5b73d7-a612-5673-62b7-f4d0477bc10e</RequestId><BoxUsage>0.0055590278</BoxUsage></ResponseMetadata></CreateDomainResponse>
+
+
+    sdb ListDomain
+    
+    <?xml version="1.0"?>
+    <ListDomainsResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ListDomainsResult><DomainName>ElasticMapReduce-2013-02</DomainName><DomainName>SIMIAN_ARMY</DomainName></ListDomainsResult><ResponseMetadata><RequestId>5e8fc8c7-bad1-07f9-8c47-4651b5ee164d</RequestId><BoxUsage>0.0000071759</BoxUsage></ResponseMetadata></ListDomainsResponse>
+
+
+Delete SIMIAN_ARMY SimpleDB table
+---------------------------------
+
+    sdb DeleteDomain SIMIAN_ARMY
+
+    <?xml version="1.0"?>
+    <DeleteDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>75a41c3d-0468-fe97-1b7a-d405fee72ba0</RequestId><BoxUsage>0.0055590278</BoxUsage></ResponseMetadata></DeleteDomainResponse>
 
 
 Configure Chaos Monkey
