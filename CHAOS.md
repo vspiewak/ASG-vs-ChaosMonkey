@@ -131,7 +131,7 @@ Create SIMIAN_ARMY SimpleDB table
     <CreateDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>3f5b73d7-a612-5673-62b7-f4d0477bc10e</RequestId><BoxUsage>0.0055590278</BoxUsage></ResponseMetadata></CreateDomainResponse>
 
 
-    sdb ListDomain
+    sdb ListDomains
     
     <?xml version="1.0"?>
     <ListDomainsResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ListDomainsResult><DomainName>ElasticMapReduce-2013-02</DomainName><DomainName>SIMIAN_ARMY</DomainName></ListDomainsResult><ResponseMetadata><RequestId>5e8fc8c7-bad1-07f9-8c47-4651b5ee164d</RequestId><BoxUsage>0.0000071759</BoxUsage></ResponseMetadata></ListDomainsResponse>
