@@ -2,12 +2,15 @@ keypair: "{{ lookup('env','PEM_NAME') }}"
 
 client: "{{ lookup('env','CLIENT') }}"
 env: "{{ lookup('env','ENV') }}"
+vpc_id: "{{ lookup('env','VPC_ID') }}"
+subnet_id: "{{ lookup('env','SUBNET_ID') }}"
 
 region: "{{ lookup('env','EC2_REGION') }}"
 
-es_discovery_aws_region: "{{ lookup('env','ES_DISCOVERY_AWS_REGION') }}"
-es_discovery_aws_key: "{{ lookup('env','ES_DISCOVERY_AWS_ACCESS_KEY') }}"
-es_discovery_aws_secret: "{{ lookup('env','ES_DISCOVERY_AWS_SECRET_KEY') }}"
+es_discovery:
+  aws_region: "{{ lookup('env','ES_DISCOVERY_AWS_REGION') }}"
+  aws_key: "{{ lookup('env','ES_DISCOVERY_AWS_ACCESS_KEY') }}"
+  aws_secret: "{{ lookup('env','ES_DISCOVERY_AWS_SECRET_KEY') }}"
 
 ami_image_id: "{{ lookup('env','AMI_IMAGE_ID') }}"
 

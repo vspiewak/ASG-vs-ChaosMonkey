@@ -9,8 +9,9 @@ Install Ansible
 (On OSX for instance...)
 
     sudo easy_install pip
-    sudo pip install boto --quiet --upgrade
-    sudo pip install ansible --quiet --upgrade
+    sudo pip install --upgrade pip
+    sudo -H pip install --upgrade boto
+    sudo -H pip install --upgrade ansible
 
 
 Configure your AWS Credentials
@@ -36,6 +37,15 @@ Configure EC2 tags
 
     export CLIENT=poc
     export ENV=asg
+
+
+Configure your VPC
+------------------
+
+Use the default VPC or create one with a public subnet
+
+    export VPC_ID=<vpc_id>
+    export SUBNET_ID=<public_subnet_id>
 
 
 Configure IAM Role for EC2 discovery
@@ -93,6 +103,10 @@ Configure EC2 ELB + LC + ASG
     export AMI_IMAGE_ID=ami-...
 
     ansible-playbook -i inventory/ec2.py playbooks/create-asg.yml
+
+For demo, configure ASG with the following values :
+* Default Cooldown: 5
+* Health Check Grace Period: 0
 
 
 You can check your cluster

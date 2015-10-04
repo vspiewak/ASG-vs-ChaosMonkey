@@ -1,10 +1,13 @@
 amazon:
   client: "{{client}}"
   env: "{{env}}"
+  vpc:
+    id: "{{vpc_id}}"
+    subnet: "{{subnet_id}}"
   instances:
     elasticsearch_node:
-      ami: ami-e7e66a90
-      type: t1.micro
+      ami: ami-99f39eee
+      type: t2.micro
       count: 1
       role: elasticsearch
       security_group:
@@ -13,3 +16,5 @@ amazon:
           - { proto: tcp, from_port: 443, to_port: 443, cidr_ip: 0.0.0.0/0 }
           - { proto: tcp, from_port: 9200, to_port: 9200, cidr_ip: 0.0.0.0/0 }
           - { proto: tcp, from_port: 9300, to_port: 9300, cidr_ip: 0.0.0.0/0 }
+        rules_egress:
+          - { proto: all , cidr_ip: "0.0.0.0/0", from_port: all, to_port: all }

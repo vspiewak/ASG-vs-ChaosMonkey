@@ -1,4 +1,5 @@
-# elaticsearch role
+---
+# Install elasticsearch
 
 - name: Install apt key for elasticsearch repository
   apt_key:
@@ -7,7 +8,7 @@
 
 - name: Install apt elasticsearch repository
   apt_repository:
-    repo='deb http://packages.elasticsearch.org/elasticsearch/{{elasticsearch.version}}/debian stable main'
+    repo='deb http://packages.elastic.co/elasticsearch/{{elasticsearch.version}}/debian stable main'
     state=present
 
 - name: Install curl
@@ -21,7 +22,6 @@
     state=latest
     force=yes
   tags: elasticsearch
-  notify: Start Elasticsearch on boot
 
 # Install Elasticsearch plugins
 - include: plugins.yml
@@ -35,4 +35,11 @@
     mode=0644
   notify: Restart Elasticsearch
 
-- service: name=elasticsearch state=started
+- name: limits.conf tuning
+  lineinfile: dest=/etc/security/limits.conf line="{{ item }}"
+  tags: elasticsearch
+  with_items:
+    - 'elasticsearch soft nofile 32000'
+    - 'elasticsearch hard nofile 32000'
+
+- service: name=elasticsearch state=started enabled=yes

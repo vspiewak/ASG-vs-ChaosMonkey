@@ -28,8 +28,8 @@
     name: "{{client}}.{{env}}.elasticsearch.launchconfiguration"
     image_id: "{{ami_image_id}}"
     key_name: "{{keypair}}"
-    security_groups: [ "{{client}}_{{env}}_elasticsearch_node_sg" ]
-    instance_type: t1.micro
+    security_groups: [ "{{vpc_id}}_{{client}}_{{env}}_elasticsearch_node_sg" ]
+    instance_type: t2.micro
 
 - name: Create EC2 Auto Scaling Group
   local_action:
